@@ -1,5 +1,9 @@
 pipeline {
     agent  any
+    environment{
+        SCANNER_HOME= tool 'sonar-scanner'
+    }
+    
     stages{
         stage("Clone Code"){
             steps{
@@ -9,6 +13,14 @@ pipeline {
         stage("Build and Test"){
             steps{
                 sh "docker build . -t node-app-test-new"
+            }
+        }
+
+         stage('SONARQUBE ANALYSIS') {
+            steps {
+                withSonarQubeEnv('sonar') {
+                    sh " $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Todo -Dsonar.projectKey=Todo "
+                }
             }
         }
          stage("Docker Build & Push"){
