@@ -18,7 +18,7 @@ pipeline {
                   
                         
     
-                             sh "docker tag node-app-test-new:priya247/node-app-test-new:latest "
+                             sh "docker tag node-app-test-new priya247/node-app-test-new:latest "
                              sh "docker push priya247/node-app-test-new:latest "
                     
                     }
